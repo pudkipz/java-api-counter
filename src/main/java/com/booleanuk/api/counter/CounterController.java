@@ -11,34 +11,49 @@ import java.util.Map;
 @RestController
 @RequestMapping("/counter")
 public class CounterController {
-    private String currentCounter;
+    private String defaultCounter;
     private Map<String, Integer> counters;
 
     public CounterController() {
-        this.currentCounter = "default counter";
+        this.defaultCounter = "default";
         this.counters = new HashMap<>();
-        this.counters.put(currentCounter, 0);
+        this.counters.put(this.defaultCounter, 0);
     }
 
     @GetMapping("/custom/{name}")
-    public String changeToCustomCounter(@PathVariable String counter) {
-        return "";
+    public String getCustomCounter(@PathVariable (name = "name") String counter) {
+        if (!this.counters.containsKey(counter)) {
+            this.counters.put(counter, 0);
+        }
+        return String.valueOf(this.counters.get(counter));
     }
 
     @GetMapping("/increment")
     public String increment() {
-        this.counters.put(currentCounter, this.counters.get(currentCounter) + 1);
-        return String.valueOf(this.counters.get(currentCounter));
+        return increment(defaultCounter);
+    }
+
+    private String increment(String counter) {
+        this.counters.put(counter, this.counters.get(counter) + 1);
+        return String.valueOf(this.counters.get(counter));
     }
 
     @GetMapping("/decrement")
     public String decrement() {
-        this.counters.put(currentCounter, this.counters.get(currentCounter) - 1);
-        return String.valueOf(this.counters.get(currentCounter));
+        return decrement(defaultCounter);
+    }
+
+    private String decrement(String counter) {
+        this.counters.put(counter, this.counters.get(counter) - 1);
+        return String.valueOf(this.counters.get(counter));
     }
 
     @GetMapping
     public String getValue() {
-        return String.valueOf(this.counters.get(currentCounter));
+        return getValue(defaultCounter);
+    }
+
+    private String getValue(String counter) {
+        return String.valueOf(this.counters.get(counter));
     }
 }
