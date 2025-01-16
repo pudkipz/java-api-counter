@@ -13,6 +13,11 @@ public class CounterController {
         this.value = 0;
     }
 
+    @GetMapping("/increment")
+    public int increment() {
+        return ++this.value;
+    }
+
     @GetMapping
     public int getValue() {
         return this.value;
