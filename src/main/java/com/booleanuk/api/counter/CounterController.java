@@ -18,6 +18,11 @@ public class CounterController {
         return ++this.value;
     }
 
+    @GetMapping("/decrement")
+    public int decrement() {
+        return --this.value;
+    }
+
     @GetMapping
     public int getValue() {
         return this.value;
