@@ -20,6 +20,18 @@ public class CounterController {
         this.counters.put(this.defaultCounter, 0);
     }
 
+    @GetMapping("/custom/{name}/increment")
+    public String incrementCustom(@PathVariable (name = "name") String counter) {
+        getCustomCounter(counter);
+        return increment(counter);
+    }
+
+    @GetMapping("/custom/{name}/decrement")
+    public String decrementCustom(@PathVariable (name = "name") String counter) {
+        getCustomCounter(counter);
+        return decrement(counter);
+    }
+
     @GetMapping("/custom/{name}")
     public String getCustomCounter(@PathVariable (name = "name") String counter) {
         if (!this.counters.containsKey(counter)) {
